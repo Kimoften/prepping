@@ -23,17 +23,18 @@ export default function Upload() {
     formData.append('company', selectedCompany);
     formData.append('traits', traits.join(','));
 
-    // API 요청을 통해 Flask 백엔드로 데이터 전송
-    const response = await fetch('http://localhost:3000/upload', {
-      method: 'POST',
-      body: formData,
-    });
+    // // API 요청을 통해 Flask 백엔드로 데이터 전송
+    // const response = await fetch('http://localhost:3000/upload', {
+    //   method: 'POST',
+    //   body: formData,
+    // });
 
-    if (response.ok) {
-      alert('파일이 성공적으로 업로드되었습니다.');
-    } else {
-      alert('업로드에 실패했습니다.');
-    }
+    // if (response.ok) {
+    //   alert('파일이 성공적으로 업로드되었습니다.');
+    // } else {
+    //   alert('업로드에 실패했습니다.');
+    // }
+    router.push('/interviewsetting_page');
   };
 
   return (
@@ -68,7 +69,7 @@ export default function Upload() {
             ))}
           </div>
         </div>
-        <button type="submit">업로드</button>
+        <button type="submit" onClick={handleSubmit}>다음</button>
       </form>
     </div>
   );

@@ -1,0 +1,72 @@
+.feedback-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.feedback-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.feedback-number {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.feedback-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feedback-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.feedback-box {
+  width: 300px;
+  height: 50px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.feedback-box.large {
+  width: 600px;
+  height: 80px;
+  padding: 10px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 저장 버튼 스타일 */
+.save-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-end;
+}
+
+.save-button:hover {
+  background-color: #005bb5;
+}
