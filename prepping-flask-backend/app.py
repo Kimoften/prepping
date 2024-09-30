@@ -28,45 +28,49 @@ def user_data_upload():
         print('Received file:', file.filename)
         url = "https://api.upstage.ai/v1/document-ai/ocr"
         headers = {"Authorization": f"Bearer {UPSTAGE_API_KEY}"}
-        files = {"document": open(file, "rb")}
+        # 파일 데이터를 FileStorage 객체에서 읽어서 바로 업로드
+        files = {"document": (file.filename, file.stream, file.mimetype)}
         response = requests.post(url, headers=headers, files=files)
         response_json = response.json()
-        # JSON 데이터를 텍스트로 변환하여 프롬프트에 전달
-        json_text = json.dumps(response_json, indent=2)  # JSON을 문자열로 변환
+        
+        # 유니코드 이스케이프 처리
+        if 'text' in response_json:
+            extracted_text = response_json['text'].encode().decode('unicode_escape').encode('latin1').decode('utf-8')
+            print(extracted_text)  # 유니코드 이스케이프를 일반 텍스트로 변환하여 출력
 
-    
+
     # 텍스트 기반의 폼 데이터 받기
     job = request.form.get('job', 'No job specified')
     company = request.form.get('company', 'No company specified')
     traits = request.form.get('traits', 'No traits specified')
 
-    summary = f"job: {job}, company: {company}, traits: {traits}, 이력서: {json_text}" 
+    summary = f"job: {job}, company: {company}, traits: {traits}, 이력서: {extracted_text}" 
 
-    # 데이터를 로그로 출력
-    print('Job:', job)
-    print('Company:', company)
-    print('Traits:', traits)
+    print(summary)
 
-    first_process = client.chat.completions.create(
+    # 성공 응답 보내기
+    return "success"
+
+def main_question_generate():
+    generation = client.chat.completions.create(
         model="solar-pro",
         messages=[
             {
                 "role": "system",
-                "content": "You are a interviewer of company."
+                "content": f"You are a interviewer of the {user_data_upload.company}. Read the user's {user_data_upload.summary} and make a main question."
             },
             {
                 "role": "user",
-                "content": summary
+                "content": user_data_upload.summary
             }
         ]
     )
-    
-    first_process_response = first_process.choices[0].message
 
-    print(first_process_response)
-    
-    # 성공 응답 보내기
-    return 'File and data uploaded successfully!'
+    main_question = generation.choices[0].message
+
+    return main_question
+
+print(main_question_generate)
 
 if __name__ == '__main__':
     app.run(debug=True)

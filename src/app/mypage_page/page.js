@@ -14,7 +14,7 @@ export default function Home() {
         <div className="container">
             <h1>마이페이지</h1>
             <button className="upload-button" onClick={handleUploadClick}>
-                정보 업로드하기
+                면접 시작하기
             </button>
         </div>
     );

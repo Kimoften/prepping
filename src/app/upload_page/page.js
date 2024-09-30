@@ -44,7 +44,7 @@ export default function Upload() {
 
   return (
     <div className="container">
-      <h1>취준생 정보 업로드</h1>
+      <h1>면접 정보 업로드</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="upload">이력서/포트폴리오/자소서 업로드</label>
