@@ -1,0 +1,47 @@
+.interview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 120px;
+    height: 150px;
+  }
+  
+  .profile-image {
+    width: 60px;
+    height: 60px;
+    background-color: #d8d8d8;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .profile-card p {
+    font-size: 14px;
+  }
+  
+  .profile-card.emphasis p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,44 @@
+.setting-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .section {
+    margin-bottom: 40px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-grid {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+  }
+  
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    background-color: #d8d8d8;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
