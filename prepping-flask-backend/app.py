@@ -5,6 +5,8 @@ import os
 from openai import OpenAI
 import requests
 import json
+from pydantic import BaseModel
+import ast
 
 app = Flask(__name__)
 
@@ -15,6 +17,15 @@ client = OpenAI(
     api_key=UPSTAGE_API_KEY,
     base_url="https://api.upstage.ai/v1/solar"
 )
+
+# class Questions(BaseModel):
+#     first_question: str
+#     second_question: str
+#     third_question: str
+#     fourth_question: str
+
+class Response1:
+    list[str]
 
 CORS(app)  # CORS 설정으로 Next.js와의 통신 허용
 
@@ -72,7 +83,12 @@ def main_question_generate(summary):
         messages=[
             {
                 "role": "system",
-                "content": f"You are a interviewer of the {summary['job']}. Read the user's {summary} and make a main question."
+                "content": f"""You are a interviewer of the {summary['job']}. Read the user's {summary} and make a main question.
+                                Make four questions.
+                                Make it a list.
+                                한글로 말해.
+                                
+                                response_format: ['첫번째 질문', '두번째 질문', '세번째 질문', '네번째 질문']"""
             },
             {
                 "role": "user",
@@ -81,9 +97,10 @@ def main_question_generate(summary):
         ]
     )
 
-    main_question = generation.choices[0].message.content
+    main_question_response = generation.choices[0].message.content
+    main_question = ast.literal_eval(main_question_response)
 
-    return main_question
+    return main_question[0]
 
 
 
