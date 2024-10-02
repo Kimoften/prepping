@@ -35,7 +35,7 @@ export default function Upload() {
       alert('업로드에 실패했습니다.');
     }
     
-    router.push('/interviewsetting_page');
+    router.push('/interview_page');
   };
 
   const handleTraitsChange = (e) => {
@@ -44,7 +44,7 @@ export default function Upload() {
 
   return (
     <div className="container">
-      <h1>면접 정보 업로드</h1>
+      <h1>면접 세팅</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="upload">이력서/포트폴리오/자소서 업로드</label>
