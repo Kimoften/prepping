@@ -19,7 +19,7 @@ export default function InterviewPage() {
 
   // 면접 시작 시 첫 질문 요청 함수
   const startInterview = async () => {
-    const res = await fetch('/api/start_interview', {
+    const res = await fetch('http://localhost:5000/start_interview', {
       method: 'POST',
       body: new FormData()  // 사용자 데이터를 포함하여 보내야 함
     });
