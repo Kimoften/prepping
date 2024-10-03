@@ -1,24 +1,29 @@
+// page.js
+"use client";  // 이 컴포넌트가 클라이언트에서 실행된다는 것을 명시
+
 import { useState, useEffect } from 'react';
-import './page.css'
+import './page.css';
 
 export default function InterviewPage() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState('');
   const [recording, setRecording] = useState(false);
-  const [mainQuestions, setMainQuestions] = useState([]);
-  const [totalMessages, setTotalMessages] = useState([]);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   let mediaRecorder;
   let audioChunks = [];
 
+  // 면접 시작 시 첫 질문을 요청
   useEffect(() => {
-    if (currentQuestionIndex < mainQuestions.length) {
-      setTimeout(() => {
-        startRecording();
-      }, 7000);
-    }
-  }, [currentQuestionIndex, mainQuestions]);
+    fetch('/api/start_interview', {
+      method: 'POST',
+      body: new FormData()  // 사용자 데이터를 포함하여 보내야 함
+    })
+    .then(res => res.json())
+    .then(data => {
+      setCurrentQuestion(data.main_question);
+    });
+  }, []);
 
-  // 1. 녹음 시작
+  // 녹음 시작 함수
   const startRecording = async () => {
     setIsPopupVisible(true);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -31,7 +36,7 @@ export default function InterviewPage() {
     };
   };
 
-  // 2. 녹음 중지 및 파일 전송
+  // 녹음 중지 및 서버 전송
   const stopRecording = () => {
     mediaRecorder.stop();
     setRecording(false);
@@ -39,45 +44,43 @@ export default function InterviewPage() {
     mediaRecorder.onstop = async () => {
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       audioChunks = [];
+
+      // 녹음 파일을 서버로 전송
       const formData = new FormData();
       formData.append('file', audioBlob);
-      const res = await fetch('http://localhost:5000/upload', {
+      const res = await fetch('/api/process_audio', {
         method: 'POST',
         body: formData,
       });
       const data = await res.json();
-      setMainQuestions(data.main_question);
-      setTotalMessages([...totalMessages, ...data.main_question]);
+
+      // 서버 응답에 따라 처리
+      if (data.main_question) {
+        setCurrentQuestion(data.main_question);  // 메인 질문 처리
+      } else if (data.tail_question) {
+        setCurrentQuestion(data.tail_question);  // 꼬리 질문 처리
+      } else if (data.status === '면접 완료') {
+        alert("면접이 완료되었습니다.");
+      }
+
+      setIsPopupVisible(false);
     };
-
-    setIsPopupVisible(false);
-  };
-
-  // 3. 면접 질문 처리 후 다음 질문으로 넘어감
-  const handleNextQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
   return (
-    <div>
-      <h1>면접중</h1>
-      <div>
-        <p>면접관 A</p>
-        <p>면접관 B</p>
-        <p>면접관 C</p>
+    <div className="container">
+      <h1>면접 중</h1>
+      <div className="question-box">
+        <h2>{currentQuestion}</h2>
       </div>
 
-      {/* 질문 팝업 */}
-      {mainQuestions.length > 0 && (
-        <div>
-          <h2>{mainQuestions[currentQuestionIndex]}</h2>
-          {isPopupVisible && <div className="popup">녹음중...</div>}
+      {isPopupVisible && (
+        <div className="popup">
+          <p>녹음 중...</p>
         </div>
       )}
 
-      {/* 녹음 완료 버튼 */}
       <button onClick={stopRecording}>녹음 완료</button>
-      <button onClick={handleNextQuestion}>다음 질문으로</button>
     </div>
   );
 }
