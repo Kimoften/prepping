@@ -1,13 +1,14 @@
-// page.js
-"use client";  // 이 컴포넌트가 클라이언트에서 실행된다는 것을 명시
+"use client";
 
 import { useState, useEffect } from 'react';
 import './page.css';
 
 export default function InterviewPage() {
+  const [transcripts, setTranscripts] = useState([]); // 질문과 답변 리스트
   const [currentQuestion, setCurrentQuestion] = useState('');
   const [recording, setRecording] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [interviewComplete, setInterviewComplete] = useState(false); // 면접 완료 여부
   let mediaRecorder;
   let audioChunks = [];
 
@@ -20,6 +21,7 @@ export default function InterviewPage() {
     .then(res => res.json())
     .then(data => {
       setCurrentQuestion(data.main_question);
+      setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
     });
   }, []);
 
@@ -54,13 +56,18 @@ export default function InterviewPage() {
       });
       const data = await res.json();
 
+      // 사용자의 답변을 기록
+      setTranscripts((prev) => [...prev, { role: 'user', text: data.answer }]);
+
       // 서버 응답에 따라 처리
       if (data.main_question) {
         setCurrentQuestion(data.main_question);  // 메인 질문 처리
+        setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
       } else if (data.tail_question) {
         setCurrentQuestion(data.tail_question);  // 꼬리 질문 처리
+        setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.tail_question }]);
       } else if (data.status === '면접 완료') {
-        alert("면접이 완료되었습니다.");
+        setInterviewComplete(true); // 면접 완료 상태 업데이트
       }
 
       setIsPopupVisible(false);
@@ -68,10 +75,24 @@ export default function InterviewPage() {
   };
 
   return (
-    <div className="container">
-      <h1>면접 중</h1>
-      <div className="question-box">
-        <h2>{currentQuestion}</h2>
+    <div className="chat-container">
+      <header className="header">
+        <h1 className="logo">프레핑 Prepping</h1>
+        <div className="header-right">
+          <a href="/mypage">마이페이지</a>
+          <a href="/logout">로그아웃</a>
+        </div>
+      </header>
+
+      <div className="chat-window">
+        {transcripts.map((transcript, index) => (
+          <div
+            key={index}
+            className={`chat-bubble ${transcript.role === 'user' ? 'user-bubble' : 'interviewer-bubble'}`}
+          >
+            {transcript.text}
+          </div>
+        ))}
       </div>
 
       {isPopupVisible && (
@@ -80,7 +101,15 @@ export default function InterviewPage() {
         </div>
       )}
 
-      <button onClick={stopRecording}>녹음 완료</button>
+      <div className="mic-button-container">
+        <button className="mic-button" onClick={startRecording}>
+          <img src="/mic-icon.png" alt="Mic" />
+        </button>
+      </div>
+
+      {interviewComplete && (
+        <button className="complete-button">면접 완료</button>
+      )}
     </div>
   );
 }
