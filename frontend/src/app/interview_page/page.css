@@ -1,47 +1,102 @@
-.interview-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
-  
-  h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
-  
-  .profile-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
-  .profile-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 10px;
-    width: 120px;
-    height: 150px;
-  }
-  
-  .profile-image {
-    width: 60px;
-    height: 60px;
-    background-color: #d8d8d8;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  .profile-card p {
-    font-size: 14px;
-  }
-  
-  .profile-card.emphasis p {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
+/* 전체 화면 스타일 */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+/* 면접관들 배치 */
+.interviewer-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.interviewer {
+  text-align: center;
+  background-color: #e0e0e0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.interviewer p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+/* 질문 박스 스타일 */
+.question-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.question-box h2 {
+  margin: 0;
+  color: #333;
+}
+
+/* 팝업 창 */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup p {
+  color: white;
+  font-size: 24px;
+  background-color: #ff3b3b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* 버튼 스타일 */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 면접 완료 버튼 */
+.complete-button {
+  background-color: #28a745;
+}
+
+.complete-button:hover {
+  background-color: #218838;
+}
