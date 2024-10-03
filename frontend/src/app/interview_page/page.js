@@ -12,18 +12,21 @@ export default function InterviewPage() {
   let mediaRecorder;
   let audioChunks = [];
 
-  // 면접 시작 시 첫 질문을 요청
+  // 면접 시작 시 첫 질문을 바로 요청
   useEffect(() => {
-    fetch('/api/start_interview', {
+    startInterview();
+  }, []);
+
+  // 면접 시작 시 첫 질문 요청 함수
+  const startInterview = async () => {
+    const res = await fetch('/api/start_interview', {
       method: 'POST',
       body: new FormData()  // 사용자 데이터를 포함하여 보내야 함
-    })
-    .then(res => res.json())
-    .then(data => {
-      setCurrentQuestion(data.main_question);
-      setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
     });
-  }, []);
+    const data = await res.json();
+    setCurrentQuestion(data.main_question);
+    setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
+  };
 
   // 녹음 시작 함수
   const startRecording = async () => {
@@ -38,7 +41,7 @@ export default function InterviewPage() {
     };
   };
 
-  // 녹음 중지 및 서버 전송
+  // 녹음 중지 및 서버 전송 함수
   const stopRecording = () => {
     mediaRecorder.stop();
     setRecording(false);
@@ -70,8 +73,17 @@ export default function InterviewPage() {
         setInterviewComplete(true); // 면접 완료 상태 업데이트
       }
 
-      setIsPopupVisible(false);
+      setIsPopupVisible(false);  // 팝업 숨기기
     };
+  };
+
+  // 녹음 중지 (팝업에서 나가기 위한 기능 추가)
+  const cancelRecording = () => {
+    setIsPopupVisible(false);  // 녹음 취소 시 팝업 닫기
+    setRecording(false);
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+    }
   };
 
   return (
@@ -98,6 +110,7 @@ export default function InterviewPage() {
       {isPopupVisible && (
         <div className="popup">
           <p>녹음 중...</p>
+          <button className="cancel-button" onClick={cancelRecording}>취소</button>
         </div>
       )}
 
