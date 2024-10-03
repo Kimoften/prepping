@@ -7,7 +7,7 @@ export default function Home() {
     const router = useRouter();
 
     const handleUploadClick = () => {
-        router.push('/upload_page');
+        router.push('/interview_setting_page');
     };
 
     return (
