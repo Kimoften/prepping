@@ -6,6 +6,10 @@ from openai import OpenAI
 import requests
 import json
 import ast
+from stt import speech_to_text
+from interview_manage import tail_question_eval_A, tail_question_eval_B, tail_question_eval_C, tail_question_generate_A, tail_question_generate_B, tail_question_generate_C
+import random
+from feedback import feedback_generate
 
 app = Flask(__name__)
 
@@ -27,6 +31,7 @@ class Response1:
     list[str]
 
 total_messages = []
+main_questions = []
 
 CORS(app)  # CORS 설정으로 Next.js와의 통신 허용
 
@@ -35,7 +40,9 @@ def upload():
     if 'file' in request.files:
         file = request.files['file']
         summary = user_data_upload(file)
+        total_messages.append(summary)
         main_question = main_question_generate(summary)
+        main_questions.append(main_question)
 
     print(main_question)
 
@@ -108,27 +115,95 @@ def main_question_generate(summary):
 
 
 
-# @app.route('/interview', methods=['GET'])
-# def main_question_generate(summary):
-#     generation = client.chat.completions.create(
-#         model="solar-pro",
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": f"You are a interviewer of the {summary.job}. Read the user's {summary} and make a main question."
-#             },
-#             {
-#                 "role": "user",
-#                 "content": summary
-#             }
-#         ]
-#     )
+@app.route('/start_interview', methods=['POST'])
+def start_interview():
+    global main_questions, current_question_index, tail_question_count
+    current_question_index = 0
+    tail_question_count = 0
+    total_messages.append(main_questions[0])
+    return jsonify({"main_question": main_questions[0]})  # 첫 질문 반환
 
-#     main_question = generation.choices[0].message['content']
 
-#     return main_question
+# 꼬리 질문을 재귀적으로 처리하는 함수
+def handle_tail_questions(summary):
+    global tail_question_count
 
-# print(main_question_generate(user_data_upload()))
+    # 꼬리 질문 판단
+    eval_A = tail_question_eval_A(summary, total_messages)
+    eval_B = tail_question_eval_B(summary, total_messages)
+    eval_C = tail_question_eval_C(summary, total_messages)
+
+    eval_results = [eval_A, eval_B, eval_C]
+    available_tail_questions = [i for i, x in enumerate(eval_results) if x == "yes"]
+
+    # 꼬리 질문 생성 여부 확인
+    if available_tail_questions and tail_question_count < 3:
+        selected_index = random.choice(available_tail_questions)
+        if selected_index == 0:
+            tail_question = tail_question_generate_A()
+        elif selected_index == 1:
+            tail_question = tail_question_generate_B()
+        elif selected_index == 2:
+            tail_question = tail_question_generate_C()
+
+        total_messages.append({"tail_question": tail_question})
+        tail_question_count += 1  # 꼬리 질문 개수 증가
+
+        return tail_question, "tail_question"
+    else:
+        return None, "no_more_tail_questions"
+
+# 메인 질문을 처리하는 함수
+def handle_main_questions():
+    global current_question_index, tail_question_count
+
+    # 현재 질문 인덱스가 남아있으면 계속 진행
+    if current_question_index < len(main_questions):
+        total_messages.append({"main_question": main_questions[current_question_index]})
+        return main_questions[current_question_index], "next_question"
+    else:
+        return None, "interview_complete"
+
+
+@app.route('/process_audio', methods=['POST'])
+def process_audio():
+    global current_question_index, main_questions, tail_question_count
+
+    if 'file' in request.files:
+        audio_file = request.files['file']
+        # STT 변환
+        transcript = speech_to_text(audio_file)
+        total_messages.append({"answer": transcript})
+        
+        summary = total_messages[0]  # 첫 번째 항목이 summary
+
+        # 꼬리 질문이 있으면 먼저 처리
+        if tail_question_count > 0 and tail_question_count < 3:
+            tail_question, tail_status = handle_tail_questions(summary)
+
+            if tail_status == "tail_question":
+                return jsonify({"tail_question": tail_question, "status": "tail_question"})
+
+        # 더 이상 꼬리 질문이 없으면 다음 메인 질문으로 넘어감
+        current_question_index += 1  # 다음 메인 질문으로 인덱스 이동
+        tail_question_count = 0  # 꼬리 질문 개수 초기화
+        main_question, main_status = handle_main_questions()
+
+        if main_status == "next_question":
+            return jsonify({"main_question": main_question, "status": "next_question"})
+        else:
+            return jsonify({"status": "면접 완료"})  # 마지막 질문 처리 완료
+
+    return jsonify({"error": "오디오 파일을 찾을 수 없습니다."}), 400
+
+
+# 면접 완료 후 피드백 처리
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    summary = total_messages[0]
+    final_feedback = feedback_generate(summary, total_messages)
+    return jsonify({"feedback": final_feedback})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
