@@ -14,7 +14,7 @@ export default function Login() {
     console.log('Email:', email);
     console.log('Password:', password);
 
-    router.push('/mypage_page');
+    router.push('/main_page');
 
 
     // if (!email || !password) {
