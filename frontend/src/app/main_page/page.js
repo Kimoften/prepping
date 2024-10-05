@@ -15,12 +15,11 @@ export default function MainPage() {
         router.push('/interview_setting_page');
     };
     return (
-
-        <div className="w-full min-h-screen bg-white overflow-hidden">
+        <div className="w-full flex flex-col h-screen bg-white overflow-hidden justify-between">
             {/* Navigation Bar */}
             <NavigationBar />
             {/* Main Content */}
-            <div className="flex flex-col items-start px-20 mt-24 space-y-5">
+            <div className="relative flex flex-col items-start px-20 mt-24 space-y-5">
                 <div className="flex flex-col items-start mt-12 mb-10 width-[380px] height-[170px]">
                     <div className="relative w-full h-[60px] items-start">
                         <Image className="absolute left-8"
@@ -38,38 +37,38 @@ export default function MainPage() {
                 {/* Interview Card */}
                 <div className="flex flex-row w-[1040px] h-[401px] gap-6">
                     {/* Main Interview Card */}
-                    <div className="flex flex-col p-12 bg-gradient-to-br from-[#6884FF] to-[#5171FF] rounded-lg w-[685px] space-y-6">
-                        <div className="text-white text-lg font-medium opacity-70">임원면접</div>
-                        <div className="text-white text-4xl font-semibold">면접 파이팅 아자작</div>
-                        <div className="flex items-end space-x-5">
-<<<<<<< HEAD
-                            <button className="flex h-16 items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg">
-=======
-                            <button className="flex items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg" onclick={handleUploadClick}>
->>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
-                                <span className="text-lg font-bold text-white">면접 시작</span>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </button>
-                            <button className="flex items-center justify-center w-16 h-16 bg-white/30 rounded-lg">
-                                <Image className="relative"
-                                    src={ClipboardLogo}
-                                    alt="ClipboardLogo"
-                                    width={24}
-                                    height={24}></Image>
-                            </button>
+                    <div className="flex flex-col justify-between p-12 bg-gradient-to-br from-[#6884FF] to-[#5171FF] rounded-lg w-[685px] space-y-6">
+                        <div className="flex flex-col gap-[10px] items-start">
+                            <div className="text-white text-lg font-medium opacity-70">임원면접</div>
+                            <div className="text-white text-4xl font-semibold">면접 파이팅 아자작</div>
+                        </div>
+                        <div className="flex items-end space-x-5 justify-between">
+                            <div className="flex flel-row gap-[11px]">
+                                <button className="flex items-center justify-center h-16 px-6 py-4 space-x-2 bg-white/50 rounded-lg" onclick={handleUploadClick}>
+                                    <span className="text-lg font-bold text-white">면접 시작</span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-6 h-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M9 5l7 7-7 7"
+                                        />
+                                    </svg>
+                                </button>
+                                <button className="flex items-center justify-center w-16 h-16 bg-white/30 rounded-lg">
+                                    <Image className="relative"
+                                        src={ClipboardLogo}
+                                        alt="ClipboardLogo"
+                                        width={24}
+                                        height={24}></Image>
+                                </button>
+                            </div>
                             <Image className="relative"
                                 src={MainLogo}
                                 alt="MainLogo"
@@ -141,7 +140,7 @@ export default function MainPage() {
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-0 w-full h-[179px] bg-[#E9E9E9]"></div>
+            <div className="w-full h-[120px] lg:h-[179px] bg-[#E9E9E9] mt-10 lg:mt-16"></div>
         </div>
     );
 }
