@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import NavigationBar from '../components/NavigationBar';
 import FileLogo from '../../images/FileLogo.svg'
 import RemoveLogo from '../../images/RemoveLogo.svg'
@@ -10,6 +11,12 @@ function MockInterviewForm() {
   const [selectedJob, setSelectedJob] = useState('');
   const [traits, setTraits] = useState({ trait1: '', trait2: '', trait3: '', trait4: '' });
   const [resumeFile, setResumeFile] = useState(null);
+
+  const router = useRouter();
+
+  const handleMain = (e) => {
+    router.push('/main_page');
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,9 +117,9 @@ function MockInterviewForm() {
 
         {/* Submit Button */}
         <div className="w-[421px] py-4 bg-[#94a7ff] rounded-lg flex justify-center items-center mt-10">
-          <button type="submit" className="text-xl text-[#202020] font-semibold">
+          <div type="submit" className="text-xl text-[#202020] font-semibold cursor-pointer" onClick={handleMain}>
             면접 생성
-          </button>
+          </div>
         </div>
       </form>
     </div>
