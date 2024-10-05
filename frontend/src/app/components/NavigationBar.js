@@ -19,10 +19,10 @@ function NavigationBar() {
         </div>
         <div className="flex flex-row items-center gap-3 w-[180px]">
           <div className="flex justify-center items-center w-[91px] h-[38px]">
-            <button className="text-[16px] font-bold text-[#A2A2A2]" onClick={handleMy}>마이페이지</button>
+            <div className="text-[16px] font-bold text-[#A2A2A2]" onClick={handleMy}>마이페이지</div>
           </div>
           <div className="flex justify-center items-center w-[77px] h-[38px] ">
-            <button className="text-[16px] font-bold text-[#A2A2A2]">로그아웃</button>
+            <div className="text-[16px] font-bold text-[#A2A2A2]">로그아웃</div>
           </div>
         </div>
       </div>
