@@ -13,6 +13,7 @@ export default function Login() {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
+    router.push('/mypage_page');
     // if (!email || !password) {
     //   alert('이메일과 비밀번호를 입력하세요.');
     //   return;
