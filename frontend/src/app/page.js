@@ -9,28 +9,36 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
 
+<<<<<<< HEAD
+    // // 이메일과 비밀번호가 있는지 확인
+=======
     router.push('/main_page');
 
 
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
     // if (!email || !password) {
     //   alert('이메일과 비밀번호를 입력하세요.');
     //   return;
     // }
 
-    // const user = JSON.parse(localStorage.getItem(email));
-    // if (user && user.password === password) {
-    //   router.push('/mypage_page');
-    // } else {
+    // // 이메일과 비밀번호가 잘못된 경우 (이 예제에서는 간단히 처리)
+    // if (email !== 'test@example.com' || password !== 'password') {
     //   alert('이메일 또는 비밀번호가 잘못되었습니다.');
+    //   return;
     // }
 
+<<<<<<< HEAD
+    router.push('/main_page');
+=======
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
     // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
-  };
+  };    // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
 
 
   return (

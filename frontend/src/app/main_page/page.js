@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
 import './page.css';
 import { useRouter } from 'next/navigation';
 import NavigationBar from '../components/NavigationBar';
 import Image from 'next/image';
 import Mic from '../../images/MainMic.svg';
+import MainLogo from '../../images/MainLogo.svg';
+import ClipboardLogo from '../../images/ClipboardLogo.svg';
 
 export default function MainPage() {
     const router = useRouter();
@@ -19,8 +21,8 @@ export default function MainPage() {
             <NavigationBar />
             {/* Main Content */}
             <div className="flex flex-col items-start px-20 mt-24 space-y-5">
-                <div className="flex flex-col items-center mt-12 mb-10 space-x-6 width-[380px] height-[170px]">
-                    <div className="relative w-full h-[60px] justify-start items-center">
+                <div className="flex flex-col items-start mt-12 mb-10 width-[380px] height-[170px]">
+                    <div className="relative w-full h-[60px] items-start">
                         <Image className="absolute left-8"
                             src={Mic}
                             alt="Mic"
@@ -34,13 +36,17 @@ export default function MainPage() {
                 </div>
 
                 {/* Interview Card */}
-                <div className="flex flex-row justify-between w-full space-x-5">
+                <div className="flex flex-row w-[1040px] h-[401px] gap-6">
                     {/* Main Interview Card */}
-                    <div className="flex flex-col p-12 bg-gradient-to-br from-[#6884FF] to-[#5171FF] rounded-lg w-1/2 space-y-6">
-                        <div className="text-white text-lg font-medium">임원면접</div>
+                    <div className="flex flex-col p-12 bg-gradient-to-br from-[#6884FF] to-[#5171FF] rounded-lg w-[685px] space-y-6">
+                        <div className="text-white text-lg font-medium opacity-70">임원면접</div>
                         <div className="text-white text-4xl font-semibold">면접 파이팅 아자작</div>
                         <div className="flex items-end space-x-5">
+<<<<<<< HEAD
+                            <button className="flex h-16 items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg">
+=======
                             <button className="flex items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg" onclick={handleUploadClick}>
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
                                 <span className="text-lg font-bold text-white">면접 시작</span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -58,27 +64,24 @@ export default function MainPage() {
                                 </svg>
                             </button>
                             <button className="flex items-center justify-center w-16 h-16 bg-white/30 rounded-lg">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-6 h-6 text-white"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M4 4h16v16H4z"
-                                    />
-                                </svg>
+                                <Image className="relative"
+                                    src={ClipboardLogo}
+                                    alt="ClipboardLogo"
+                                    width={24}
+                                    height={24}></Image>
                             </button>
+                            <Image className="relative"
+                                src={MainLogo}
+                                alt="MainLogo"
+                                width={45}
+                                height={54}>
+                            </Image>
                         </div>
                     </div>
 
                     {/* Interview Practice Cards */}
                     <div className="flex flex-col space-y-5">
-                        <div className="flex items-center justify-between w-80 p-6 bg-gray-200 rounded-lg">
+                        <div className="flex items-center justify-between w-[331px] p-6 bg-gray-200 rounded-lg h-1/3">
                             <div>
                                 <div className="text-sm font-medium text-gray-500">임원면접</div>
                                 <div className="text-2xl font-semibold text-gray-800">면접연습 2</div>
@@ -98,7 +101,7 @@ export default function MainPage() {
                                 />
                             </svg>
                         </div>
-                        <div className="flex items-center justify-between w-80 p-6 bg-gray-200 rounded-lg">
+                        <div className="flex items-center justify-between w-[331px] p-6 bg-gray-200 rounded-lg h-1/3">
                             <div>
                                 <div className="text-sm font-medium text-gray-500">임원면접</div>
                                 <div className="text-2xl font-semibold text-gray-800">면접연습 3</div>
@@ -118,7 +121,7 @@ export default function MainPage() {
                                 />
                             </svg>
                         </div>
-                        <div className="flex items-center justify-between w-80 p-6 bg-gray-100 border border-gray-300 rounded-lg">
+                        <div className="flex items-center justify-between w-[331px] p-6 bg-gray-100 border border-gray-300 rounded-lg h-1/3">
                             <div className="text-2xl font-medium text-blue-500">모의면접 추가</div>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -138,6 +141,7 @@ export default function MainPage() {
                     </div>
                 </div>
             </div>
+            <div className="absolute bottom-0 w-full h-[179px] bg-[#E9E9E9]"></div>
         </div>
     );
 }
