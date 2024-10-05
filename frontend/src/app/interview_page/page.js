@@ -91,41 +91,35 @@ export default function InterviewPage() {
 
 
   return (
-    <div className="relative w-full h-screen bg-white overflow-y-aut">
+    <div className="relative w-full h-screen bg-white">
       <NavigationBar />
 
-      {transcripts.map((transcript, index) => (
-          <div key={index} className="mb-4">
-            {transcript.role === 'interviewer' ? (
-              // 면접관 질문 스타일
-              <div className="absolute left-[200px] top-[173px] flex items-end gap-[34px]">
-                <Image className="relative"
-                  src={Logo}
-                  alt="Logo"
-                  width={55}
-                  height={66}></Image>
-                <div className="p-[20px] bg-[#F2F2F2] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex items-start gap-[10px]">
-                  <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
+      <div className="absolute left-[200px] top-[173px] right-[200px] overflow-y-auto">
+        {transcripts.map((transcript, index) => (
+            <div key={index} className="mb-4">
+              {transcript.role === 'interviewer' ? (
+                // 면접관 질문 스타일
+                <div className="flex items-end gap-[34px]">
+                  <Image className="relative"
+                    src={Logo}
+                    alt="Logo"
+                    width={55}
+                    height={66}></Image>
+                  <div className="p-[20px] bg-[#F2F2F2] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex items-start gap-[10px]">
+                    <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              // 사용자 응답 스타일
-              <div className="absolute left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex items-end gap-[34px]">
-                <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
-              </div>
-            )}
-          </div>
-        ))}
-
-
-
-      {/* 대화 로그를 렌더링 */}
-      {/* <div className="absolute left-[50px] top-[250px] w-[600px] h-[400px] overflow-y-auto p-[20px] bg-[#f9f9f9] border rounded">
-        
-      </div> */}
-
-
-
+              ) : (
+                // 사용자 응답 스타일 left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex 
+                <div className="flex justify-end gap-[34px]">
+                  <div className="w-[508px] h-auto p-5 bg-[rgba(142,162,255,0.50)] rounded-bl-[20px] rounded-tr-[20px] rounded-tl-[20px] gap-[10px]">
+                    <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+      </div>
 
       {/* <div className="absolute left-[200px] top-[173px] flex items-end gap-[34px]">
         <Image className="relative"
