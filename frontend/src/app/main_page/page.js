@@ -39,7 +39,7 @@ export default function MainPage() {
                     <div className="flex flex-col justify-between p-12 bg-gradient-to-br from-[#6884FF] to-[#5171FF] rounded-lg w-[685px] space-y-6">
                         <div className="flex flex-col gap-[10px] items-start">
                             <div className="text-white text-lg font-medium opacity-70">임원면접</div>
-                            <div className="text-white text-4xl font-semibold">면접 파이팅 아자작</div>
+                            <div className="text-white text-4xl font-semibold">면접 파이팅 아쟈쟉</div>
                         </div>
                         <div className="flex items-end space-x-5 justify-between">
                             <div className="flex flel-row gap-[11px]">

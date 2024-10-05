@@ -34,51 +34,44 @@ def upload():
     global main_questions
     if 'file' in request.files:
         file = request.files['file']
-        summary = user_data_upload(file)
+        print('Received file:', file.filename)
+        url = "https://api.upstage.ai/v1/document-ai/ocr"
+        headers = {"Authorization": f"Bearer {UPSTAGE_API_KEY}"}
+        # 파일 데이터를 FileStorage 객체에서 읽어서 바로 업로드
+        files = {"document": (file.filename, file.stream, file.mimetype)}
+        response = requests.post(url, headers=headers, files=files)
+        response_json = response.json()
+
+        # 텍스트 기반의 폼 데이터 받기
+        job = request.form.get('job', 'No job specified')
+        company = request.form.get('company', 'No company specified')
+        traits = request.form.get('traits', 'No traits specified')
+
+        # 유니코드 이스케이프 처리
+        if 'text' in response_json:
+            extracted_text = response_json['text'].encode().decode('unicode_escape').encode('latin1').decode('utf-8')
+
+            summary = {
+                "job": job,
+                "company": company,
+                "traits": traits,
+                "이력서": extracted_text
+            }
+            
+        else:
+            summary = {
+                "job": job,
+                "company": company,
+                "traits": traits
+            }
+
         total_messages.append(summary)
         main_question = main_question_generate(summary)
         main_questions.append(main_question)
 
     # 성공 응답 보내기
-    return "success"
+    return jsonify({"status": "success"})
 
-def user_data_upload(file):
-    file = request.files['file']
-    # 파일 이름을 로그로 출력
-    print('Received file:', file.filename)
-    url = "https://api.upstage.ai/v1/document-ai/ocr"
-    headers = {"Authorization": f"Bearer {UPSTAGE_API_KEY}"}
-    # 파일 데이터를 FileStorage 객체에서 읽어서 바로 업로드
-    files = {"document": (file.filename, file.stream, file.mimetype)}
-    response = requests.post(url, headers=headers, files=files)
-    response_json = response.json()
-    
-    # 텍스트 기반의 폼 데이터 받기
-    job = request.form.get('job', 'No job specified')
-    company = request.form.get('company', 'No company specified')
-    traits = request.form.get('traits', 'No traits specified')
-
-    # 유니코드 이스케이프 처리
-    if 'text' in response_json:
-        extracted_text = response_json['text'].encode().decode('unicode_escape').encode('latin1').decode('utf-8')
-
-        summary = {
-            "job": job,
-            "company": company,
-            "traits": traits,
-            "이력서": extracted_text
-        }
-        
-    else:
-        summary = {
-            "job": job,
-            "company": company,
-            "traits": traits
-        }
-
-    total_messages.append(summary)
-
-    return summary
 
 def main_question_generate(summary):
     generation = client.chat.completions.create(
