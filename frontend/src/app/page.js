@@ -15,7 +15,13 @@ export default function Login() {
     console.log('Email:', email);
     console.log('Password:', password);
 
+<<<<<<< HEAD
     // // 이메일과 비밀번호가 있는지 확인
+=======
+    router.push('/main_page');
+
+
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
     // if (!email || !password) {
     //   alert('이메일과 비밀번호를 입력하세요.');
     //   return;
@@ -27,7 +33,10 @@ export default function Login() {
     //   return;
     // }
 
+<<<<<<< HEAD
     router.push('/main_page');
+=======
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
     // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
   };    // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
 

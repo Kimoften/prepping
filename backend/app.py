@@ -10,25 +10,19 @@ from stt import speech_to_text
 from interview_manage import tail_question_eval_A, tail_question_eval_B, tail_question_eval_C, tail_question_generate_A, tail_question_generate_B, tail_question_generate_C
 import random
 from feedback import feedback_generate
+import io
 
 app = Flask(__name__)
 
 load_dotenv()
 UPSTAGE_API_KEY = os.getenv('UPSTAGE_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 client = OpenAI(
     api_key=UPSTAGE_API_KEY,
     base_url="https://api.upstage.ai/v1/solar"
 )
 
-# class Questions(BaseModel):
-#     first_question: str
-#     second_question: str
-#     third_question: str
-#     fourth_question: str
-
-class Response1:
-    list[str]
 
 total_messages = []
 main_questions = []
@@ -171,8 +165,16 @@ def process_audio():
 
     if 'file' in request.files:
         audio_file = request.files['file']
+
+        # Flask FileStorage -> bytes 변환
+        audio_bytes = audio_file.read()
+
+        # io.BytesIO로 감싸서 파일처럼 다룸
+        audio_io = io.BytesIO(audio_bytes)
+        audio_io.name = audio_file.filename
+
         # STT 변환
-        transcript = speech_to_text(audio_file)
+        transcript = speech_to_text(audio_io)
         total_messages.append({"answer": transcript})
         
         summary = total_messages[0]  # 첫 번째 항목이 summary

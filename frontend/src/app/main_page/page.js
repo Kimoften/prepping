@@ -42,7 +42,11 @@ export default function MainPage() {
                         <div className="text-white text-lg font-medium opacity-70">임원면접</div>
                         <div className="text-white text-4xl font-semibold">면접 파이팅 아자작</div>
                         <div className="flex items-end space-x-5">
+<<<<<<< HEAD
                             <button className="flex h-16 items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg">
+=======
+                            <button className="flex items-center justify-center px-6 py-4 space-x-2 bg-white/50 rounded-lg" onclick={handleUploadClick}>
+>>>>>>> a58b550f32abfcf1565122ab7f55ce2d589c37bc
                                 <span className="text-lg font-bold text-white">면접 시작</span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
