@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import NavigationBar from '../components/NavigationBar';
 
 export default function InterviewPage() {
+  const router = useRouter()
   const [transcripts, setTranscripts] = useState([]); // 질문과 답변 리스트
   const [currentQuestion, setCurrentQuestion] = useState('');
   const [recording, setRecording] = useState(false);

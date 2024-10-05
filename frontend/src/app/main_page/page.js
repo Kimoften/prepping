@@ -1,6 +1,5 @@
 "use client";
 
-import './page.css';
 import { useRouter } from 'next/navigation';
 import NavigationBar from '../components/NavigationBar';
 import Image from 'next/image';
@@ -44,7 +43,7 @@ export default function MainPage() {
                         </div>
                         <div className="flex items-end space-x-5 justify-between">
                             <div className="flex flel-row gap-[11px]">
-                                <button className="flex items-center justify-center h-16 px-6 py-4 space-x-2 bg-white/50 rounded-lg" onclick={handleUploadClick}>
+                                <button className="flex items-center justify-center h-16 px-6 py-4 space-x-2 bg-white/50 rounded-lg" onClick={handleUploadClick}>
                                     <span className="text-lg font-bold text-white">면접 시작</span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
