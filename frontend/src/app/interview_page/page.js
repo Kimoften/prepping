@@ -21,12 +21,11 @@ export default function InterviewPage() {
 
   const startInterview = async () => {
     const res = await fetch('http://localhost:5000/start_interview', {
-      method: 'POST',
-      body: new FormData(), // 사용자 데이터를 포함하여 보내야 함
+      method: 'GET',
     });
     const data = await res.json();
-    setCurrentQuestion(data.main_question[0]);
-    setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question[0] }]);
+    setCurrentQuestion(data.firt_question);
+    setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.first_question}]);
 
     startRecording();
   };
@@ -65,11 +64,11 @@ export default function InterviewPage() {
 
         setTranscripts((prev) => [...prev, { role: 'user', text: data.answer }]);
 
-        if (data.main_question) {
+        if (data.status === 'next_question') {
           setCurrentQuestion(data.main_question);
           setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
           startRecording();
-        } else if (data.tail_question) {
+        } else if (data.status === 'tail_question') {
           setCurrentQuestion(data.tail_question);
           setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.tail_question }]);
           startRecording();
