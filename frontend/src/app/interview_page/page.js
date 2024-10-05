@@ -1,7 +1,11 @@
 "use client";
 
+import Image from 'next/image'
+import Logo from '../../images/Logo.svg'
+import RecodingLogo from '../../images/RecodingLogo.svg'
 import { useState, useEffect } from 'react';
-import './page.css';
+import NavigationBar from '../components/NavigationBar';
+
 
 export default function InterviewPage() {
   const [transcripts, setTranscripts] = useState([]); // 질문과 답변 리스트
@@ -12,23 +16,20 @@ export default function InterviewPage() {
   let mediaRecorder;
   let audioChunks = [];
 
-  // 면접 시작 시 첫 질문을 바로 요청
   useEffect(() => {
     startInterview();
   }, []);
 
-  // 면접 시작 시 첫 질문 요청 함수
   const startInterview = async () => {
     const res = await fetch('http://localhost:5000/start_interview', {
       method: 'POST',
-      body: new FormData()  // 사용자 데이터를 포함하여 보내야 함
+      body: new FormData(), // 사용자 데이터를 포함하여 보내야 함
     });
     const data = await res.json();
     setCurrentQuestion(data.main_question);
     setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
   };
 
-  // 녹음 시작 함수
   const startRecording = async () => {
     setIsPopupVisible(true);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -41,7 +42,6 @@ export default function InterviewPage() {
     };
   };
 
-  // 녹음 중지 및 서버 전송 함수
   const stopRecording = () => {
     mediaRecorder.stop();
     setRecording(false);
@@ -50,7 +50,6 @@ export default function InterviewPage() {
       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
       audioChunks = [];
 
-      // 녹음 파일을 서버로 전송
       const formData = new FormData();
       formData.append('file', audioBlob);
       const res = await fetch('/api/process_audio', {
@@ -59,27 +58,24 @@ export default function InterviewPage() {
       });
       const data = await res.json();
 
-      // 사용자의 답변을 기록
       setTranscripts((prev) => [...prev, { role: 'user', text: data.answer }]);
 
-      // 서버 응답에 따라 처리
       if (data.main_question) {
-        setCurrentQuestion(data.main_question);  // 메인 질문 처리
+        setCurrentQuestion(data.main_question);
         setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
       } else if (data.tail_question) {
-        setCurrentQuestion(data.tail_question);  // 꼬리 질문 처리
+        setCurrentQuestion(data.tail_question);
         setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.tail_question }]);
       } else if (data.status === '면접 완료') {
-        setInterviewComplete(true); // 면접 완료 상태 업데이트
+        setInterviewComplete(true);
       }
 
-      setIsPopupVisible(false);  // 팝업 숨기기
+      setIsPopupVisible(false);
     };
   };
 
-  // 녹음 중지 (팝업에서 나가기 위한 기능 추가)
   const cancelRecording = () => {
-    setIsPopupVisible(false);  // 녹음 취소 시 팝업 닫기
+    setIsPopupVisible(false);
     setRecording(false);
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
       mediaRecorder.stop();
@@ -87,42 +83,36 @@ export default function InterviewPage() {
   };
 
   return (
-    <div className="chat-container">
-      <header className="header">
-        <h1 className="logo">프레핑 Prepping</h1>
-        <div className="header-right">
-          <a href="/mypage">마이페이지</a>
-          <a href="/logout">로그아웃</a>
+    <div className="relative w-full h-screen bg-white">
+      <NavigationBar />
+      <div className="absolute left-[200px] top-[173px] flex items-end gap-[34px]">
+        <Image className="relative"
+          src={Logo}
+          alt="Logo"
+          width={55}
+          height={66} ></Image>
+        <div className="p-[20px] bg-[#F2F2F2] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex items-start gap-[10px]">
+          <span className="text-black text-[20px] font-[400] font-Pretendard">1분 자기소개 해주시면 됩니다.</span>
         </div>
-      </header>
-
-      <div className="chat-window">
-        {transcripts.map((transcript, index) => (
-          <div
-            key={index}
-            className={`chat-bubble ${transcript.role === 'user' ? 'user-bubble' : 'interviewer-bubble'}`}
-          >
-            {transcript.text}
-          </div>
-        ))}
       </div>
-
-      {isPopupVisible && (
-        <div className="popup">
-          <p>녹음 중...</p>
-          <button className="cancel-button" onClick={cancelRecording}>취소</button>
-        </div>
-      )}
-
-      <div className="mic-button-container">
-        <button className="mic-button" onClick={startRecording}>
-          <img src="/mic-icon.png" alt="Mic" />
+      <div className="absolute left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px]">
+        <span className="text-black text-[20px] font-[400] font-Pretendard">안녕하세요. 기아 타이거즈 김도영 짱 잘생김</span>
+      </div>
+      <div className="absolute w-[202px] h-[202px] bottom-[20px] left-1/2 transform -translate-x-1/2 z-50">
+        <button
+          className="w-full h-full bg-[#EBEEFF] p-6 rounded-2xl border-4 border-[rgba(148,168,255,0.60)] flex items-center justify-center"
+          onClick={startRecording}
+        >
+          <Image className="relative"
+            src={RecodingLogo}
+            alt="RecodingLogo"
+            width={72}
+            height={46}
+          ></Image>
         </button>
       </div>
 
-      {interviewComplete && (
-        <button className="complete-button">면접 완료</button>
-      )}
+      <div className="absolute bottom-0" style={{ width: '100%', height: '30%', background: 'linear-gradient(180deg, rgba(148.28, 167.85, 255, 0) 0%, rgba(148, 168, 255, 0.30) 100%)' }} />
     </div>
   );
 }
