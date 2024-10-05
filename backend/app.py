@@ -238,7 +238,7 @@ def process_audio():
         if main_status == "next_question":
             return jsonify({"answer": transcript, "main_question": main_question, "status": "next_question"})
         else:
-            return jsonify({"status": "면접 완료"})  # 마지막 질문 처리 완료
+            return jsonify({"answer": transcript, "status": "면접 완료"})  # 마지막 질문 처리 완료
 
     return jsonify({"error": "오디오 파일을 찾을 수 없습니다."}), 400
 

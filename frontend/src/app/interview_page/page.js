@@ -101,7 +101,12 @@ export default function InterviewPage() {
           // setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.tail_question }]);
           startRecording();
         } else if (data.status === '면접 완료') {
-          setInterviewComplete(true);
+          // 마지막 답변이 정상적으로 출력된 후 면접 완료 상태로 설정
+          if (data.answer && data.answer.trim() !== '') {
+            setTimeout(() => {
+              setInterviewComplete(true);
+            }, 500); // 약간의 지연을 두어 마지막 답변이 렌더링되도록 함
+          }
         }
 
         setIsPopupVisible(false);
