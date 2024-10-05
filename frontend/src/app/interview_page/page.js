@@ -26,7 +26,7 @@ export default function InterviewPage() {
     });
     const data = await res.json();
     setCurrentQuestion(data.main_question[0]);
-    setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question }]);
+    setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.main_question[0] }]);
 
     startRecording();
   };
@@ -109,14 +109,14 @@ export default function InterviewPage() {
                     <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
                   </div>
                 </div>
-              ) : (
-                // 사용자 응답 스타일 left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex 
+              ) : transcript.role === 'user' ? (
+                // 사용자 응답 스타일  
                 <div className="flex justify-end gap-[34px]">
                   <div className="w-[508px] h-auto p-5 bg-[rgba(142,162,255,0.50)] rounded-bl-[20px] rounded-tr-[20px] rounded-tl-[20px] gap-[10px]">
                     <span className="text-black text-[20px] font-[400] font-Pretendard">{transcript.text}</span>
                   </div>
                 </div>
-              )}
+              ) : null}
             </div>
           ))}
       </div>
@@ -131,18 +131,6 @@ export default function InterviewPage() {
           <span className="text-black text-[20px] font-[400] font-Pretendard">{currentQuestion}</span>
         </div>
       </div> */}
-
-      {/* 대화 로그를 렌더링 */}
-      {/* <div className="absolute left-[50px] top-[250px] w-[600px] h-[400px] overflow-y-auto p-[20px] bg-[#f9f9f9] border rounded">
-        {transcripts.map((transcript, index) => (
-          <div key={index} className={`mb-4 ${transcript.role === 'user' ? 'text-right' : 'text-left'}`}>
-            <span className={`inline-block p-[10px] rounded-lg ${transcript.role === 'user' ? 'bg-blue-200' : 'bg-gray-200'}`}>
-              {transcript.text}
-            </span>
-          </div>
-        ))}
-      </div> */}
-
 
       {/* <div className="absolute left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px]">
         <span className="text-black text-[20px] font-[400] font-Pretendard">안녕하세요. 기아 타이거즈 김도영 짱 잘생김</span>
