@@ -24,14 +24,14 @@ export default function InterviewPage() {
       method: 'GET',
     });
     const data = await res.json();
-    setCurrentQuestion(data.firt_question);
+    setCurrentQuestion(data.first_question);
     setTranscripts((prev) => [...prev, { role: 'interviewer', text: data.first_question}]);
 
     startRecording();
   };
 
   const startRecording = async () => {
-    setIsPopupVisible(true);
+    // setIsPopupVisible(true);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorderRef.current = new MediaRecorder(stream);
     mediaRecorderRef.current.start();
@@ -93,7 +93,7 @@ export default function InterviewPage() {
     <div className="relative w-full h-screen bg-white">
       <NavigationBar />
 
-      <div className="absolute left-[200px] top-[173px] right-[200px] overflow-y-auto">
+      <div className="absolute top-[173px] bottom-[282px] left-[200px] right-[200px] overflow-y-auto">
         {transcripts.map((transcript, index) => (
             <div key={index} className="mb-4">
               {transcript.role === 'interviewer' ? (
@@ -120,21 +120,6 @@ export default function InterviewPage() {
           ))}
       </div>
 
-      {/* <div className="absolute left-[200px] top-[173px] flex items-end gap-[34px]">
-        <Image className="relative"
-          src={Logo}
-          alt="Logo"
-          width={55}
-          height={66} ></Image>
-        <div className="p-[20px] bg-[#F2F2F2] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px] flex items-start gap-[10px]">
-          <span className="text-black text-[20px] font-[400] font-Pretendard">{currentQuestion}</span>
-        </div>
-      </div> */}
-
-      {/* <div className="absolute left-[732px] top-[282px] w-[508px] h-[138px] p-[20px] bg-[rgba(142,162,255,0.50)] rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px]">
-        <span className="text-black text-[20px] font-[400] font-Pretendard">안녕하세요. 기아 타이거즈 김도영 짱 잘생김</span>
-      </div> */}
-
 
       <div className="absolute w-[202px] h-[202px] bottom-[20px] left-1/2 transform -translate-x-1/2 z-50">
         <button
@@ -150,7 +135,10 @@ export default function InterviewPage() {
         </button>
       </div>
 
-      <div className="absolute bottom-0" style={{ width: '100%', height: '30%', background: 'linear-gradient(180deg, rgba(148.28, 167.85, 255, 0) 0%, rgba(148, 168, 255, 0.30) 100%)' }} />
+      {/* 녹음 중일 때만 활성화되는 div */}
+      {recording && (
+        <div className="absolute bottom-0" style={{ width: '100%', height: '30%', background: 'linear-gradient(180deg, rgba(148.28, 167.85, 255, 0) 0%, rgba(148, 168, 255, 0.30) 100%)' }} />
+      )}
     </div>
   );
 }

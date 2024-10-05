@@ -135,7 +135,7 @@ def main_question_generate(summary):
                             > 
                             > Your goal is to provide a realistic interview experience, generating a diverse set of interview questions tailored to the user’s background, desired job role, and company alignment without explicitly mentioning core values. Focus solely on questioning to assess the user’s readiness and fit for the role comprehensively.
                             >
-                            response_format: ['첫번째 질문', '두번째 질문', '세번째 질문', '네번째 질문']
+                            response_format must be ['첫번째 질문', '두번째 질문', '세번째 질문', '네번째 질문']
                             """
             },
             {
@@ -196,7 +196,7 @@ def handle_main_questions():
     global current_question_index, tail_question_count
 
     # 현재 질문 인덱스가 남아있으면 계속 진행
-    if current_question_index < len(main_questions):
+    if current_question_index < len(main_questions[0]):
         total_messages.append({"main_question": main_questions[0][current_question_index]})
         return main_questions[0][current_question_index], "next_question"
     else:
