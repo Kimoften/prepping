@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 
 
 function NavigationBar() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleMy = (e) => {
-    router.push('/my_page');
+    router.push('/mypage_page');
     // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
   };
   return (
