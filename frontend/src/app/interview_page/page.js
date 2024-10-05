@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Logo from '../../images/Logo.svg'
 import RecodingLogo from '../../images/RecodingLogo.svg'
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation'
 import NavigationBar from '../components/NavigationBar';
 
 export default function InterviewPage() {
