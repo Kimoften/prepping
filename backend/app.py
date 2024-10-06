@@ -243,7 +243,7 @@ def process_audio():
 
 
 # 면접 완료 후 피드백 처리
-@app.route('/feedback', methods=['POST'])
+@app.route('/feedback', methods=['GET'])
 def feedback():
     summary = total_messages[0]
     strong_point = strong_point(summary, total_messages)
@@ -256,7 +256,7 @@ def feedback():
         recommended_answer = recommend_answer_generate(summary, total_messages, answer)  # 각 답변을 recommend_answer_generate로 처리
         recommended_answers.append(recommended_answer)  # 처리된 결과를 리스트에 추가
 
-    return jsonify({"company": summary['company'], "strong_point": strong_point, "weak_point": weak_point, "standard_fit_score": standard_fit_score, "diction_score": diction_score, "recommended_answers": recommended_answers})
+    return jsonify({"company": summary['company'], "strong_point": strong_point, "weak_point": weak_point, "standard_fit_score": standard_fit_score, "diction_score": diction_score, "answers": answers, "recommended_answers": recommended_answers})
 
 
 if __name__ == '__main__':

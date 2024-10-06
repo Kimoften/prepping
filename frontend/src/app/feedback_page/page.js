@@ -4,26 +4,63 @@ import './page.css';
 import Image from "next/image"
 import TradeLogo from "../../images/TradeLogo.svg"
 import Logo from "../../images/Logo.svg"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import NavigationBar from '../components/NavigationBar';
 
 export default function Feedback() {
   const router = useRouter()
   const [selectedQuestion, setSelectedQuestion] = useState(1);
-  const feedbackData = [
-    { id: 1, question: "1분 자기소개", answer: "저는 ... 입니다. 저의 장점은 ...", suggestion: "이렇게 해보세요" },
-    { id: 2, question: "지원동기에 대한 질문", answer: "이 회사에 지원한 이유는 ...", suggestion: "이렇게 해보세요" },
-    { id: 3, question: "인턴경험 대한 질문", answer: "저는 이전에 ... 회사에서 인턴 경험을 했습니다.", suggestion: "이렇게 해보세요" },
-  ];
+  const [company, setCompany] = useState(''); // 회사명 상태
+  const [strongPoint, setStrongPoint] = useState(''); // 강점 상태
+  const [weakPoint, setWeakPoint] = useState(''); // 약점 상태
+  const [standardFitScore, setStandardFitScore] = useState(0); // 기준 적합성 점수
+  const [dictionScore, setDictionScore] = useState(0); // 전달력 점수
+  const [recommendedAnswers, setRecommendedAnswers] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  // const feedbackData = [
+  //   { id: 1, question: "Q1", answer: "저는 ... 입니다. 저의 장점은 ...", suggestion: "이렇게 해보세요" },
+  //   { id: 2, question: "Q2", answer: "이 회사에 지원한 이유는 ...", suggestion: "이렇게 해보세요" },
+  //   { id: 3, question: "Q3", answer: "저는 이전에 ... 회사에서 인턴 경험을 했습니다.", suggestion: "이렇게 해보세요" },
+  // ];
+
+  // 데이터를 가져오는 함수
+  const fetchFeedbackData = async () => {
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'GET',
+      });
+      const data = await res.json();
+      setCompany(data.company);
+      setStrongPoint(data.strong_point);
+      setWeakPoint(data.weak_point);
+      setStandardFitScore(data.standard_fit_score)
+      setDictionScore(data.diction_score)
+
+      setAnswers(data.answers || []);
+      setRecommendedAnswers(data.recommended_answers || []);  // recommended_answers가 있을 경우에만 설정
+    } catch (error) {
+      console.error("Failed to fetch feedback data:", error);
+    }
+  };
+
+  useEffect(() => {
+    // 페이지 렌더링될 때 피드백 데이터를 가져옴
+    fetchFeedbackData();
+  }, []);
+
+
   const handleQuestionClick = (id) => {
     setSelectedQuestion(id);
   };
 
-  // const [feedbackData, setFeedbackData] = useState({
-  //   1: { answer: '내 답변 1', suggestion: '수정안 1' },
-  //   2: { answer: '내 답변 2', suggestion: '수정안 2' },
-  // });
+  const feedbackData = answers.map((answer, index) => ({
+    id: index + 1,
+    question: `Q${index + 1}`,
+    answer: answer,
+    suggestion: recommendedAnswers[index] || "추천 답변 없음"
+  }));
+
 
   const handleSave = () => {
     // 데이터를 로컬 스토리지에 저장하는 예시입니다. 실제 백엔드와 연동할 때는 API 호출을 사용할 수 있습니다.
@@ -35,7 +72,7 @@ export default function Feedback() {
     <div className="feedback-container w-full overflow-y-auto items-center bg-white">
       <NavigationBar />
       <div className="font-bold text-3xl text-black mt-[126px] items-start w-[1040px] font-['Pretendard'] mb-[40px]">
-        <span>OO 면접 레포트</span>
+        <span>{company} 면접 레포트</span>
       </div>
 
       <div className="w-[1040px] flex flex-col justify-start items-start gap-[18px] mb-16">
@@ -103,7 +140,7 @@ export default function Feedback() {
                 <div className="self-stretch text-[#718bff] text-2xl font-medium font-['Pretendard']">기준 적합성</div>
                 <div className="self-stretch h-[75px] p-4 bg-[#f7f7f7] rounded-xl flex-col justify-start items-end gap-2.5 flex">
                   <div className="justify-start items-end gap-1 inline-flex">
-                    <div className="w-[51px] h-[43px] text-[#6783ff] text-[40px] font-semibold font-['Pretendard']">90</div>
+                    <div className="w-[51px] h-[43px] text-[#6783ff] text-[40px] font-semibold font-['Pretendard']">{standardFitScore}</div>
                     <div className="text-[#858585] text-xl font-medium font-['Pretendard']">/ 100점</div>
                   </div>
                 </div>
@@ -114,7 +151,7 @@ export default function Feedback() {
               <div className="self-stretch text-[#718bff] text-2xl font-medium font-['Pretendard']">전달력</div>
               <div className="self-stretch h-[75px] p-4 bg-[#f7f7f7] rounded-xl flex-col justify-start items-end gap-2.5 flex">
                 <div className="justify-start items-end gap-1 inline-flex">
-                  <div className="w-11 h-[43px] text-[#676767] text-[40px] font-semibold font-['Pretendard']">10</div>
+                  <div className="w-11 h-[43px] text-[#676767] text-[40px] font-semibold font-['Pretendard']">{dictionScore}</div>
                   <div className="text-[#858585] text-xl font-medium font-['Pretendard']">/ 100점</div>
                 </div>
               </div>
@@ -127,7 +164,7 @@ export default function Feedback() {
               <div className="self-stretch text-[#718bff] text-2xl font-medium font-['Pretendard']">강점</div>
               <div className="self-stretch grow shrink basis-0 p-4 bg-[#f7f7f7] rounded-xl flex-col justify-start items-start gap-2.5 flex">
                 <div className="justify-start items-end gap-1 inline-flex">
-                  <div className="text-[#3b3b3b] text-[22px] font-normal font-['Pretendard']">당신의 강점은 ₩~입니다.</div>
+                  <div className="text-[#3b3b3b] text-[22px] font-normal font-['Pretendard']">{strongPoint}</div>
                 </div>
               </div>
             </div>
@@ -136,7 +173,7 @@ export default function Feedback() {
               <div className="self-stretch text-[#676767] text-2xl font-medium font-['Pretendard']">약점</div>
               <div className="self-stretch grow shrink basis-0 p-4 bg-[#f7f7f7] rounded-xl flex-col justify-start items-start gap-2.5 flex">
                 <div className="justify-start items-end gap-1 inline-flex">
-                  <div className="text-[#3b3b3b] text-[22px] font-normal font-['Pretendard']">당신의 약점은 ~~입니다.</div>
+                  <div className="text-[#3b3b3b] text-[22px] font-normal font-['Pretendard']">{weakPoint}</div>
                 </div>
               </div>
             </div>
