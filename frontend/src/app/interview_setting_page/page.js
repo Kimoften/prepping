@@ -18,26 +18,26 @@ function MockInterviewForm() {
     e.preventDefault();
     // FormData 객체를 생성해서 파일과 입력값을 추가합니다.
     const formData = new FormData();
-    
+
     formData.append('company', selectedCompany); // 회사
     formData.append('job', selectedJob); // 직무
     formData.append('resume', resumeFile); // 자소서 파일
-    
+
     // 인재상(특징들)을 반복문으로 추가
     Object.keys(traits).forEach(key => {
       formData.append(key, traits[key]);
     });
-    
+
     try {
       const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log('면접 생성 성공:', data);
-        router.push('/main_page');
+        router.push('/interview_page');
       } else {
         console.error('면접 생성 실패:', response.statusText);
       }
@@ -117,13 +117,13 @@ function MockInterviewForm() {
                       width={24}
                       height={24}></Image>
                     <span className="text-sm text-black">{resumeFile.name}</span>
-                    <button type="button" onClick={() => setResumeFile(null)}>
+                    <div className="cursor-pointer" type="button" onClick={() => setResumeFile(null)}>
                       <Image className="relative"
                         src={RemoveLogo}
                         alt="RemoveLogo"
                         width={24}
                         height={24}></Image>
-                    </button>
+                    </div>
                   </div>
                 )}
               </div>

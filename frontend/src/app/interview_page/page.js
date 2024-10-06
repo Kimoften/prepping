@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Logo from '../../images/Logo.svg'
 import RecodingLogo from '../../images/RecodingLogo.svg'
+import BlueMicLogo from '../../images/BlueMicLogo.svg'
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation'
 import NavigationBar from '../components/NavigationBar';
@@ -171,14 +172,14 @@ export default function InterviewPage() {
 
       <div className="absolute w-[202px] h-[202px] bottom-[20px] left-1/2 transform -translate-x-1/2 z-50">
         <button
-          className="w-full h-full bg-[#EBEEFF] p-6 rounded-2xl border-4 border-[rgba(148,168,255,0.60)] flex items-center justify-center"
+          className="w-full h-full bg-white p-6 rounded-2xl border-4 border-[rgba(148,168,255,0.60)] flex items-center justify-center"
           onClick={handleRecordingButtonClick}
         >
           <Image className="relative"
-            src={RecodingLogo}
-            alt="RecodingLogo"
-            width={72}
-            height={46}
+            src={recording ? RecodingLogo : BlueMicLogo}
+            alt="BlueMicgLogo"
+            width={80}
+            height={80}
           ></Image>
         </button>
       </div>
