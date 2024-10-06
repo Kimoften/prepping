@@ -1,0 +1,15 @@
+{
+  "name": "prepping",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "http-proxy-middleware": "^1.0.6",
+    "express": "^4.17.1"
+  }
+}
