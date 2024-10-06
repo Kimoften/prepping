@@ -5,7 +5,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',  // 프론트엔드의 API 요청
-                destination: 'https://port-0-prepping-m1xavyvwd17dd5c1.sel4.cloudtype.app/:path*',  // Flask 백엔드로 프록시
+                destination: 'https://localhost:5000/:path*',  // Flask 백엔드로 프록시
             }
         ];
     }

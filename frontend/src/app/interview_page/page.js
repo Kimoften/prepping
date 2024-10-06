@@ -27,7 +27,7 @@ export default function InterviewPage() {
   }, []);
 
   const startInterview = async () => {
-    const res = await fetch('/api/start_interview', {
+    const res = await fetch('http://127.0.0.1:5000/start_interview', {
       method: 'GET',
     });
     const data = await res.json();
@@ -85,7 +85,7 @@ export default function InterviewPage() {
 
         const formData = new FormData();
         formData.append('file', audioFile);
-        const res = await fetch('/api/process_audio', {
+        const res = await fetch('http://127.0.0.1:5000/process_audio', {
           method: 'POST',
           body: formData,
         });

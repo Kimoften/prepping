@@ -41,6 +41,7 @@ def upload():
         files = {"document": (file.filename, file.stream, file.mimetype)}
         response = requests.post(url, headers=headers, files=files)
         response_json = response.json()
+        print(response_json)
 
         # 텍스트 기반의 폼 데이터 받기
         job = request.form.get('job', 'No job specified')
@@ -64,12 +65,19 @@ def upload():
                 "company": company,
                 "traits": traits
             }
+        
+        summary = {
+                "job": "개발자",
+                "company": "삼성",
+                "traits": traits,
+                "이력서": "안녕하세요 취업 준비생입니다."
+            }
 
         total_messages.append(summary)
         main_question = main_question_generate(summary)
         main_questions.append(main_question)
 
-    # 성공 응답 보내기
+        # 성공 응답 보내기
     return jsonify({"status": "success"})
 
 
@@ -141,7 +149,6 @@ def main_question_generate(summary):
     main_question_response = generation.choices[0].message.content
     main_question = ast.literal_eval(main_question_response)
 
-
     return main_question
 
 
@@ -151,9 +158,10 @@ def start_interview():
     global main_questions, current_question_index, tail_question_count
     current_question_index = 0
     tail_question_count = 0
-    main_question_list = main_questions[0]
-    total_messages.append(main_question_list[0])
-    return jsonify({"first_question": main_question_list[0]})  # 첫 질문 반환
+    # main_question_list = main_questions[0]
+    print(main_questions)
+    total_messages.append(main_questions[0])
+    return jsonify({"first_question": main_questions[0]})  # 첫 질문 반환
 
 
 # 꼬리 질문을 재귀적으로 처리하는 함수
@@ -260,4 +268,6 @@ def feedback():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
+
+# host='0.0.0.0', port=5000, 
