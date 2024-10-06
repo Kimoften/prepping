@@ -151,8 +151,9 @@ def start_interview():
     global main_questions, current_question_index, tail_question_count
     current_question_index = 0
     tail_question_count = 0
-    total_messages.append(main_questions[0][0])
-    return jsonify({"first_question": main_questions[0][0]})  # 첫 질문 반환
+    main_question_list = main_questions[0]
+    total_messages.append(main_question_list[0])
+    return jsonify({"first_question": main_question_list[0]})  # 첫 질문 반환
 
 
 # 꼬리 질문을 재귀적으로 처리하는 함수
