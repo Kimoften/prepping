@@ -29,7 +29,7 @@ main_questions = []
 
 CORS(app)  # CORS 설정으로 Next.js와의 통신 허용
 
-@app.route('/api/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload():
     global main_questions
     if 'file' in request.files:
@@ -146,13 +146,14 @@ def main_question_generate(summary):
 
 
 
-@app.route('/api/start_interview', methods=['GET'])
+@app.route('/start_interview', methods=['GET'])
 def start_interview():
     global main_questions, current_question_index, tail_question_count
     current_question_index = 0
     tail_question_count = 0
-    total_messages.append(main_questions[0][0])
-    return jsonify({"first_question": main_questions[0][0]})  # 첫 질문 반환
+    main_question_list = main_questions[0]
+    total_messages.append(main_question_list[0])
+    return jsonify({"first_question": main_question_list[0]})  # 첫 질문 반환
 
 
 # 꼬리 질문을 재귀적으로 처리하는 함수
@@ -196,7 +197,7 @@ def handle_main_questions():
         return None, "interview_complete"
 
 
-@app.route('/api/process_audio', methods=['POST'])
+@app.route('/process_audio', methods=['POST'])
 def process_audio():
     global current_question_index, main_questions, tail_question_count
 
@@ -237,7 +238,7 @@ def process_audio():
 
 
 # 면접 완료 후 피드백 처리
-@app.route('/api/feedback', methods=['POST'])
+@app.route('/feedback', methods=['POST'])
 def feedback():
     summary = total_messages[0]
     final_feedback = feedback_generate(summary, total_messages)
