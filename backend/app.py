@@ -9,7 +9,7 @@ import ast
 from stt import speech_to_text
 from interview_manage import tail_question_eval_A, tail_question_eval_B, tail_question_eval_C, tail_question_generate_A, tail_question_generate_B, tail_question_generate_C
 import random
-from feedback import feedback_generate
+from feedback import recommend_answer_generate, strong_point, weak_point, standard_fit_score, diction_score
 import io
 
 app = Flask(__name__)
@@ -196,6 +196,8 @@ def handle_main_questions():
     else:
         return None, "interview_complete"
 
+answers = []  # 사용자의 답변만 모아 놓는 리스트
+recommended_answers = []
 
 @app.route('/process_audio', methods=['POST'])
 def process_audio():
@@ -213,6 +215,9 @@ def process_audio():
 
         # STT 변환
         transcript = speech_to_text(audio_io)
+
+        # 답변만 별도로 answers 리스트에 추가
+        answers.append(transcript)
         total_messages.append({"answer": transcript})
         
         summary = total_messages[0]  # 첫 번째 항목이 summary
@@ -241,8 +246,17 @@ def process_audio():
 @app.route('/feedback', methods=['POST'])
 def feedback():
     summary = total_messages[0]
-    final_feedback = feedback_generate(summary, total_messages)
-    return jsonify({"feedback": final_feedback})
+    strong_point = strong_point(summary, total_messages)
+    weak_point = weak_point(summary, total_messages)
+    standard_fit_score = standard_fit_score(summary, total_messages)
+    diction_score = diction_score(summary, total_messages)
+
+    # answers 리스트의 각 답변을 recommend_answer_generate 함수로 처리
+    for answer in answers:
+        recommended_answer = recommend_answer_generate(summary, total_messages, answer)  # 각 답변을 recommend_answer_generate로 처리
+        recommended_answers.append(recommended_answer)  # 처리된 결과를 리스트에 추가
+
+    return jsonify({"company": summary['company'], "strong_point": strong_point, "weak_point": weak_point, "standard_fit_score": standard_fit_score, "diction_score": diction_score, "recommended_answers": recommended_answers})
 
 
 if __name__ == '__main__':
