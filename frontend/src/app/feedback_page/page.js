@@ -1,8 +1,9 @@
-"use client"; 
+"use client";
 
 import './page.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import NavigationBar from '../components/NavigationBar';
 
 export default function Feedback() {
   const router = useRouter()
@@ -18,9 +19,12 @@ export default function Feedback() {
   };
 
   return (
-    <div className="feedback-container">
-      <h1>피드백</h1>
-      <div className="feedback-item">
+    <div className="feedback-container w-full overflow-y-auto items-center bg-white">
+      <NavigationBar />
+      <div className="font-bold text-3xl text-black mt-[126px] items-start w-[1040px] font-['Pretendard']">
+        <span>OO 면접 레포트</span>
+      </div>
+      <div className="w-[1040px] flex flex-col justify-start items-start gap-[18px]">
         <div className="feedback-number">1</div>
         <div className="feedback-content">
           <div className="feedback-section">
@@ -33,7 +37,7 @@ export default function Feedback() {
           </div>
         </div>
       </div>
-      <div className="feedback-item">
+      <div className="w-full px-[200px] py-[30px] bg-gradient-to-r from-[#eaedff] to-[#acbbff] flex flex-col justify-start items-start gap-[18px]">
         <div className="feedback-number">2</div>
         <div className="feedback-content">
           <div className="feedback-section">
@@ -51,6 +55,7 @@ export default function Feedback() {
       <button className="save-button" onClick={handleSave}>
         저장하기
       </button>
+      <div className="w-[1440px] h-[179px] relative bg-[#e9e9e9]" />
     </div>
   );
 }
