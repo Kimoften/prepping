@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Prepping
 
-## Getting Started
+## About this project
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Prepping(프레핑)은 AI(STT + LLM)을 활용한 면접 시뮬레이션 서비스입니다. “준비하다”의 “prep”과 point, reason, example, point의 면접 말하기기법인 “PREP”의 두가지 뜻을 담아 Prepping이라는 이름을 지었습니다. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+사용자의 면접 역량 향상을 위해, 바로 사용할 수 있을만큼 쉽게 실질적인 도움이 되는 면접 연습 환경을 제공합니다. 뿐만아니라 AI로 사용자 맞춤형 질문과 피드백을 생성해 더욱 개인화된 면접 준비 서비스를 제공합니다.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Demo Video
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+[Link] - [https://drive.google.com/file/d/1YhU0-9obomaSCXBEMVpMCPS8zft5IgrH/view?usp=sharing](https://drive.google.com/file/d/1YhU0-9obomaSCXBEMVpMCPS8zft5IgrH/view?usp=sharing)
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack & Key Feature
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![스크린샷 2024-10-07 11.50.32.png](Prepping%20115a9d5c9ef5800bb16ee99cd5af9702/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-10-07_11.50.32.png)
 
-## Deploy on Vercel
+## How we use LLM
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![스크린샷 2024-10-07 11.51.22.png](Prepping%20115a9d5c9ef5800bb16ee99cd5af9702/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-10-07_11.51.22.png)
+
+## AI Architecture
+
+---
+
+![스크린샷 2024-10-07 11.51.52.png](Prepping%20115a9d5c9ef5800bb16ee99cd5af9702/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-10-07_11.51.52.png)
+
+## Team Member
+
+---
+
+최어진 - Lead / Design
+
+김종협 - Develop/Fullstack
+
+이준희 - Develop/Fullstack
+
+전호석 - Develop/FE
+
+이준형 - Develop/BE
