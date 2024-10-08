@@ -40,6 +40,10 @@ Prepping(프레핑)은 AI(STT + LLM)을 활용한 면접 시뮬레이션 서비�
 
 ## 실행 방법
 ### 1. 프론트엔드 서버 실행법
-터미널 -> cd frontend -> npm run dev
+터미널 -> cd frontend -> npm install next -> npm run dev
 
-#### 2. 백엔드 서버 실행법
+### 2. 백엔드 서버 실행법
+터미널 -> cd backend -> python -m venv venv -> venv\Scripts\activate -> pip install -r requirements.txt -> python app.py
+
+### 3. 서비스 실행
+http://localhost:3000 실행 / <로그인> email: upstage@korea.ac.kr  password: upstage  /  면접 시작 버튼 누르기

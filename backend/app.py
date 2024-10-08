@@ -31,7 +31,7 @@ CORS(app)  # CORS 설정으로 Next.js와의 통신 허용
 
 def load_db():
     # 데이터베이스 파일 경로
-    DB_FILE = './backend/userdb.json'
+    DB_FILE = 'userdb.json'
     if os.path.exists(DB_FILE):
         with open(DB_FILE, 'r') as file:
             data=json.load(file)
@@ -44,6 +44,7 @@ def sign_in():
     data = request.json
     print(data)
     users = load_db()
+    print(users)
     for user in users:
         if user['email'] == data['email'] and user['password'] == data['password'] :
             return jsonify({'success': True, 'message': '로그인 성공!'})
