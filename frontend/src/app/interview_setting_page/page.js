@@ -21,7 +21,7 @@ function MockInterviewForm() {
 
     formData.append('company', selectedCompany); // 회사
     formData.append('job', selectedJob); // 직무
-    formData.append('resume', resumeFile); // 자소서 파일
+    formData.append('file', resumeFile); // 자소서 파일
 
     // 인재상(특징들)을 반복문으로 추가
     Object.keys(traits).forEach(key => {
@@ -145,14 +145,13 @@ function MockInterviewForm() {
             ))}
           </div>
         </div>
-
-        {/* Submit Button */}
-        <div className="w-[421px] py-4 bg-[#94a7ff] rounded-lg flex justify-center items-center mt-10">
-          <div type="submit" className="text-xl text-[#202020] font-semibold cursor-pointer" onClick={handleSubmit}>
-            면접 생성
-          </div>
-        </div>
       </form>
+      {/* Submit Button */}
+      <div className="w-[421px] py-4 bg-[#94a7ff] rounded-lg flex justify-center items-center mt-10">
+        <div type="submit" className="text-xl text-[#202020] font-semibold cursor-pointer" onClick={handleSubmit}>
+          면접 생성
+        </div>
+      </div>
     </div>
   );
 }

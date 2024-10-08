@@ -66,22 +66,40 @@ def upload():
                 "traits": traits
             }
         
-        summary = {
-                "job": "개발자",
-                "company": "삼성",
-                "traits": traits,
-                "이력서": "안녕하세요 취업 준비생입니다."
-            }
+        # summary = {
+        #         "job": "개발자",
+        #         "company": "삼성",
+        #         "traits": traits,
+        #         "이력서": "안녕하세요 취업 준비생입니다."
+        #     }
 
         total_messages.append(summary)
         main_question = main_question_generate(summary)
         main_questions.append(main_question)
 
-    else:
-        return jsonify({"status": "no_file"}), 404
+        return jsonify({"status": "success, yesfile"}), 200
+    
+    elif request.form:
+        # 텍스트 기반의 폼 데이터 받기
+        job = request.form.get('job', 'No job specified')
+        company = request.form.get('company', 'No company specified')
+        traits = request.form.get('traits', 'No traits specified')
 
-        # 성공 응답 보내기
-    return jsonify({"status": "success"}), 200
+        summary = {
+            "job": job,
+            "company": company,
+            "traits": traits
+        }
+
+        total_messages.append(summary)
+        main_question = main_question_generate(summary)
+        main_questions.append(main_question)
+
+        return jsonify({"status": "success, nofile"}), 200
+
+    else:
+        return jsonify({"status": "no_request"}), 404
+
 
 
 def main_question_generate(summary):
@@ -163,8 +181,8 @@ def start_interview():
     tail_question_count = 0
     # main_question_list = main_questions[0]
     print(main_questions)
-    total_messages.append(main_questions[0])
-    return jsonify({"first_question": main_questions[0]})  # 첫 질문 반환
+    total_messages.append(main_questions[0][0])
+    return jsonify({"first_question": main_questions[0][0]})  # 첫 질문 반환
 
 
 # 꼬리 질문을 재귀적으로 처리하는 함수
