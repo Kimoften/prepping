@@ -23,38 +23,24 @@ export default function Feedback() {
 
   // 데이터를 가져오는 함수
   const fetchFeedbackData = async () => {
-    const storedData = localStorage.getItem('feedbackData');
-    if (storedData) {
-      const data = JSON.parse(storedData);
+    setIsLoading(true);  // 데이터 로드 시작
+    try {
+      const res = await fetch('http://127.0.0.1:5000/feedback', {
+        method: 'GET',
+      });
+      const data = await res.json();
       setCompany(data.company);
       setStrongPoint(data.strong_point);
       setWeakPoint(data.weak_point);
-      setStandardFitScore(data.standard_fit_score);
-      setDictionScore(data.diction_score);
-      setAnswers(data.answers);
-      setRecommendedAnswers(data.recommended_answers);
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);  // 데이터 로드 시작
-      try {
-        const res = await fetch('http://127.0.0.1:5000/feedback', {
-          method: 'GET',
-        });
-        const data = await res.json();
-        localStorage.setItem('feedbackData', JSON.stringify(data));  // 서버로부터 받은 데이터를 저장
-        setCompany(data.company);
-        setStrongPoint(data.strong_point);
-        setWeakPoint(data.weak_point);
-        setStandardFitScore(data.standard_fit_score)
-        setDictionScore(data.diction_score)
+      setStandardFitScore(data.standard_fit_score)
+      setDictionScore(data.diction_score)
 
-        setAnswers(data.answers || []);
-        setRecommendedAnswers(data.recommended_answers || []);  // recommended_answers가 있을 경우에만 설정
-        setIsLoading(false);  // 데이터 로드 완료
-      } catch (error) {
-        console.error("Failed to fetch feedback data:", error);
-        setIsLoading(false);  // 에러 발생 시 로드 완료 처리
-      }
+      setAnswers(data.answers || []);
+      setRecommendedAnswers(data.recommended_answers || []);  // recommended_answers가 있을 경우에만 설정
+      setIsLoading(false);  // 데이터 로드 완료
+    } catch (error) {
+      console.error("Failed to fetch feedback data:", error);
+      setIsLoading(false);  // 에러 발생 시 로드 완료 처리
     }
   };
 
