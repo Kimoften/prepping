@@ -77,8 +77,11 @@ def upload():
         main_question = main_question_generate(summary)
         main_questions.append(main_question)
 
+    else:
+        return jsonify({"status": "no_file"}), 404
+
         # 성공 응답 보내기
-    return jsonify({"status": "fail"}), 678
+    return jsonify({"status": "success"}), 200
 
 
 def main_question_generate(summary):
@@ -254,17 +257,17 @@ def process_audio():
 @app.route('/feedback', methods=['GET'])
 def feedback():
     summary = total_messages[0]
-    strong_point = strong_point(summary, total_messages)
-    weak_point = weak_point(summary, total_messages)
-    standard_fit_score = standard_fit_score(summary, total_messages)
-    diction_score = diction_score(summary, total_messages)
+    strongpoint = strong_point(summary, total_messages)
+    weakpoint = weak_point(summary, total_messages)
+    standardfit_score = standard_fit_score(summary, total_messages)
+    dictionscore = diction_score(summary, total_messages)
 
     # answers 리스트의 각 답변을 recommend_answer_generate 함수로 처리
     for answer in answers:
         recommended_answer = recommend_answer_generate(summary, total_messages, answer)  # 각 답변을 recommend_answer_generate로 처리
         recommended_answers.append(recommended_answer)  # 처리된 결과를 리스트에 추가
 
-    return jsonify({"company": summary['company'], "strong_point": strong_point, "weak_point": weak_point, "standard_fit_score": standard_fit_score, "diction_score": diction_score, "answers": answers, "recommended_answers": recommended_answers})
+    return jsonify({"company": summary['company'], "strong_point": strongpoint, "weak_point": weakpoint, "standard_fit_score": standardfit_score, "diction_score": dictionscore, "answers": answers, "recommended_answers": recommended_answers})
 
 
 if __name__ == '__main__':
