@@ -98,7 +98,7 @@ export default function Feedback() {
         {/* Answer Display */}
         {selectedQuestion && (
           <div className="relative w-full flex flex-col gap-[18px]">
-            <div className="relative w-full h-[126px] p-[30px] bg-[#f7f7f7] rounded-2xl flex-col justify-start items-start">
+            <div className="relative w-full min-h-[126px] p-[30px] bg-[#f7f7f7] rounded-2xl flex-col justify-start items-start">
               <div className="self-stretch h-[66px] flex-col justify-start items-start gap-[116px] flex">
                 <div className="flex-col justify-start items-start gap-4 flex">
                   <div className="text-[#a2a2a2] text-lg font-normal font-['Pretendard']">내 답변</div>
@@ -107,7 +107,7 @@ export default function Feedback() {
               </div>
             </div>
 
-            <div className="relative w-full h-[149px] p-[30px] bg-[#f2f5ff] rounded-2xl border border-[#8ea2ff]/50 flex-col justify-center items-start gap-4 inline-flex">
+            <div className="relative w-full min-h-[149px] p-[30px] bg-[#f2f5ff] rounded-2xl border border-[#8ea2ff]/50 flex-col justify-center items-start gap-4 inline-flex">
               <div className="p-2.5 bg-white rounded-[10px] border border-[#94a7ff]/60 justify-start items-center gap-2.5 inline-flex">
                 <Image className="relative"
                   src={TradeLogo}
@@ -132,7 +132,7 @@ export default function Feedback() {
             height={36}></Image>
           <div className="text-[#6783ff] text-2xl font-extrabold font-['NanumSquareRoundOTF']">프레핑 면접 코칭</div>
         </div>
-        <div className="flex flex-row gap-6 h-[366px]">
+        <div className="flex flex-row gap-6 min-h-[366px]">
           <div className="relative flex flex-col gap-[22px]">
             {/*기준적합성*/}
             <div className="relative flex flex-col gap-5">
@@ -158,7 +158,7 @@ export default function Feedback() {
             </div>
           </div>
 
-          <div className="w-[685px] h-[366px] p-6 bg-white/50 rounded-[20px] border border-[#bcc8ff]/30 flex-col justify-start items-start gap-5 inline-flex">
+          <div className="w-[685px] min-h-[366px] p-6 bg-white/50 rounded-[20px] border border-[#bcc8ff]/30 flex-col justify-start items-start gap-5 inline-flex">
             {/*강점*/}
             <div className="self-stretch grow shrink basis-0 flex-col justify-start items-start gap-5 flex">
               <div className="self-stretch text-[#718bff] text-2xl font-medium font-['Pretendard']">강점</div>

@@ -74,10 +74,10 @@ function MockInterviewForm() {
                 className="w-full p-5 text-xl text-black border border-[#e3e3e3] rounded-lg"
               >
                 <option value="" disabled>회사를 선택하세요</option>
-                <option value="Company A">삼성</option>
-                <option value="Company B">LG</option>
-                <option value="Company C">SK</option>
-                <option value="Company D">현대</option>
+                <option value="삼성">삼성</option>
+                <option value="LG">LG</option>
+                <option value="SK">SK</option>
+                <option value="현대">현대</option>
               </select>
             </div>
             {/* Job */}
@@ -90,10 +90,10 @@ function MockInterviewForm() {
                 className="w-full p-5 text-xl text-black border border-[#e3e3e3] rounded-lg"
               >
                 <option value="" disabled>직무를 선택하세요</option>
-                <option value="Job A">개발</option>
-                <option value="Job B">디자인</option>
-                <option value="Job C">기획</option>
-                <option value="Job D">금융</option>
+                <option value="개발">개발</option>
+                <option value="디자인">디자인</option>
+                <option value="기획">기획</option>
+                <option value="금융">금융</option>
               </select>
             </div>
             {/* Resume Upload */}

@@ -275,6 +275,7 @@ def process_audio():
 @app.route('/feedback', methods=['GET'])
 def feedback():
     summary = total_messages[0]
+    print(summary)
     strongpoint = strong_point(summary, total_messages)
     weakpoint = weak_point(summary, total_messages)
     standardfit_score = standard_fit_score(summary, total_messages)
