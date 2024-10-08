@@ -27,7 +27,7 @@ export default function Feedback() {
   // 데이터를 가져오는 함수
   const fetchFeedbackData = async () => {
     try {
-      const res = await fetch('/api/feedback', {
+      const res = await fetch('http://127.0.0.1:5000/feedback', {
         method: 'GET',
       });
       const data = await res.json();

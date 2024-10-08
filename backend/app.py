@@ -78,7 +78,7 @@ def upload():
         main_questions.append(main_question)
 
         # 성공 응답 보내기
-    return jsonify({"status": "success"})
+    return jsonify({"status": "fail"}), 678
 
 
 def main_question_generate(summary):
