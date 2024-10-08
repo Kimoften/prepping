@@ -1,0 +1,34 @@
+{
+    "users": [
+        {
+            "username": "ivan1007",
+            "email": "ivan1007@naver.com",
+            "password": "ivan1007",
+            "archive": []
+        },
+        {
+            "username": "0000",
+            "email": "0000",
+            "password": "0000",
+            "archive": []
+        },
+        {
+            "username": "1111",
+            "email": "1111",
+            "password": "1111",
+            "archive": []
+        },
+        {
+            "username": "1234",
+            "email": "1234",
+            "password": "1234",
+            "archive": []
+        },
+        {
+            "username": "upstage",
+            "email": "upstage@korea.ac.kr",
+            "password": "upstage",
+            "archive": []
+        }
+    ]
+}

@@ -1,8 +1,9 @@
 "use client";
 
 import './page.css';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
+
 
 export default function Login() {
   const router = useRouter()
@@ -10,26 +11,29 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
+    const signupData = {
+      "email": email,
+      "password": password,
+    };
 
-    // // 이메일과 비밀번호가 있는지 확인
-    // if (!email || !password) {
-    //   alert('이메일과 비밀번호를 입력하세요.');
-    //   return;
-    // }
+    const response = await fetch('http://localhost:5000/sign_in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signupData),
+    });
 
-    // // 이메일과 비밀번호가 잘못된 경우 (이 예제에서는 간단히 처리)
-    // if (email !== 'test@example.com' || password !== 'password') {
-    //   alert('이메일 또는 비밀번호가 잘못되었습니다.');
-    //   return;
-    // }
+    const data = await response.json();
 
-    router.push('/main_page');
-    // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
-  };    // 여기서 API 호출을 통해 백엔드로 데이터를 전송할 수 있습니다.
+    if (data.success) {
+      router.push('/main_page'); 
+    } else {
+      alert(data.message); 
+    }
+  };
 
 
   return (
