@@ -40,7 +40,7 @@ Prepping(프레핑)은 AI(STT + LLM)을 활용한 면접 시뮬레이션 서비�
 
 ## 로컬 서버 실행 방법
 ### 0. .env 파일 작성 (루트 디렉토리에)
-UPSTAGE_API_KEY = up_mqjOAaRxVXodzWJiSRJa67j3AGnfK
+UPSTAGE_API_KEY = up_mqjOAaRxVXodzWJiSRJa67j3AGnfK  
 OPENAI_API_KEY = sk-YiUsaKRljbVEaNIzzYgipOlE5p2xJnfyWXl7LVrQ8BT3BlbkFJcE0Cah30wqDuITIAqdWNefLcPKFlsiQS2bI9y4exMA
 
 ### 1. 프론트엔드 서버 실행법
